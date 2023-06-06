@@ -18,7 +18,7 @@ pip install -q -U git+https://github.com/huggingface/transformers.git
 ## weigtht select one is suitable for you !
 
 - [rwkv](https://huggingface.co/BlinkDL) 
-- 使用 convert_rwkv4.py 转换权重，配置及tokeniner
+- 使用 convert_rwkv4.py 转换权重，配置及tokenizer
 
 
 
