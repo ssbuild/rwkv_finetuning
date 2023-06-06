@@ -6,7 +6,9 @@ import os
 import torch
 from transformers import BitsAndBytesConfig
 from config.constant_map import train_info_models
-train_model_config = train_info_models['rwkv-4-pile-169m']
+
+#切换模型
+train_model_config = train_info_models['rwkv-4-pile-430m']
 
 
 global_args = {

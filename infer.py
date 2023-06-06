@@ -19,6 +19,7 @@ if __name__ == '__main__':
 
     dataHelper = NN_DataHelper(model_args, None, data_args)
     tokenizer, config, _,_= dataHelper.load_tokenizer_and_config(config_kwargs={"torch_dtype": torch.float16},config_class_name=RwkvConfig)
+    dataHelper.preprocess_tokenizer_config()
     pl_model = MyTransformer(config=config, model_args=model_args)
     model = pl_model.get_llm_model()
 

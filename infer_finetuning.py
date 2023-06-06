@@ -19,7 +19,7 @@ if __name__ == '__main__':
 
     dataHelper = NN_DataHelper(model_args, None, data_args)
     tokenizer, _, _,_= dataHelper.load_tokenizer_and_config(config_class_name=RwkvConfig)
-
+    dataHelper.preprocess_tokenizer_config()
 
     config = RwkvConfig.from_pretrained('./best_ckpt')
     pl_model = MyTransformer(config=config, model_args=model_args)

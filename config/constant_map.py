@@ -4,18 +4,46 @@
 # @File：model_maps
 
 train_info_models = {
-    'rwkv-4-430m-pile': {
-        'model_type': 'rwkv',
-        'model_name_or_path': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-pile-430m',
-        'config_name': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-pile-169m/config.json',
-        'tokenizer_name': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-pile-430m',
-    },
     'rwkv-4-pile-169m': {
         'model_type': 'rwkv',
         'model_name_or_path': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-pile-169m',
         'config_name': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-pile-169m/config.json',
         'tokenizer_name': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-pile-169m',
     },
+    'rwkv-4-pile-430m': {
+        'model_type': 'rwkv',
+        'model_name_or_path': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-pile-430m',
+        'config_name': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-pile-430m/config.json',
+        'tokenizer_name': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-pile-430m',
+    },
+
+    'rwkv-4-pileplus-430m': {
+        'model_type': 'rwkv',
+        'model_name_or_path': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-pileplus-430m',
+        'config_name': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-pileplus-430m/config.json',
+        'tokenizer_name': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-pileplus-430m',
+    },
+
+# rwkv-4-pileplus
+    'rwkv-4-pile-3b': {
+        'model_type': 'rwkv',
+        'model_name_or_path': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-pile-3b',
+        'config_name': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-pile-3b/config.json',
+        'tokenizer_name': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-pile-3b',
+    },
+    'rwkv-4-pile-7b': {
+        'model_type': 'rwkv',
+        'model_name_or_path': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-pile-7b',
+        'config_name': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-pile-7b/config.json',
+        'tokenizer_name': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-pile-7b',
+    },
+    'rwkv-4-pile-14b': {
+        'model_type': 'rwkv',
+        'model_name_or_path': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-pile-14b',
+        'config_name': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-pile-14b/config.json',
+        'tokenizer_name': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-pile-14b',
+    },
+
 }
 
 
