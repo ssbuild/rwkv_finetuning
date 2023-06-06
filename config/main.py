@@ -15,6 +15,9 @@ enable_int8 = False # qlora int8
 enable_int4 = False # qlora int4
 
 
+if enable_ptv2:
+    raise ValueError('not support ptv2')
+
 if enable_lora:
     from config.sft_config_lora import *
 elif enable_ptv2:
