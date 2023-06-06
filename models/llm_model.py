@@ -2,9 +2,6 @@
 # @Time    : 2023/5/12 20:41
 # @Author  : tk
 # @FileName: llm_model
-
-from dataclasses import dataclass
-
 from deep_training.nlp.models.rwkv4.modeling_rwkv import TransformerRWKV4LMHeadModel,RwkvConfig,set_model_profile
 from deep_training.trainer.pl.modelweighter import *
 
@@ -41,7 +38,7 @@ class TransformerRWKV4ForLM(TransformerRWKV4LMHeadModel):
 
 
     def enable_input_require_grads(self):
-        ...
+        pass
         # setattr(self.model, 'model_parallel', True)
         # setattr(self.model, 'is_parallelizable', True)
         # # self.model.gradient_checkpointing_enable()

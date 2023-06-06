@@ -13,8 +13,7 @@ from deep_training.data_helper import DataHelper, ModelArguments, TrainingArgume
 from models import LoraArguments,LoraConfig,PromptArguments
 from fastdatasets.record import load_dataset as Loader, RECORD, WriterObject, gfile
 from transformers import PreTrainedTokenizer, HfArgumentParser, PretrainedConfig
-from data_processer import DataStrategy, TokenSupervision, TokenUnSupervision,TokenSupervisionRounds,\
-    DEFAULT_EOS_TOKEN, DEFAULT_BOS_TOKEN, DEFAULT_UNK_TOKEN
+from data_processer import DataStrategy, TokenSupervision, TokenUnSupervision,TokenSupervisionRounds
 from config import *
 from models import RwkvConfig,set_model_profile
 
@@ -50,18 +49,9 @@ class NN_DataHelper(DataHelper):
         assert data_conf[DataStrategy.unsup]['stride'] > 0
 
     def preprocess_tokenizer_config(self):
-        model_args = self.model_args
+        # model_args = self.model_args
         tokenizer = self.tokenizer
         config = self.config
-        if "llama" in model_args.model_name_or_path.lower() and tokenizer.bos_token_id != DEFAULT_BOS_TOKEN:
-            tokenizer.add_special_tokens({
-                "eos_token": DEFAULT_EOS_TOKEN,
-                "bos_token": DEFAULT_BOS_TOKEN,
-                "unk_token": DEFAULT_UNK_TOKEN,
-            })
-            if tokenizer.pad_token_id is None or tokenizer.pad_token_id == -1:
-                tokenizer.pad_token_id = tokenizer.eos_token_id
-
         if tokenizer.pad_token is None:
             tokenizer.add_special_tokens({
                 "pad_token": tokenizer.eos_token,
@@ -164,25 +154,7 @@ class NN_DataHelper(DataHelper):
 
 
 
-def preprocess_tokenizer(tokenizer: PreTrainedTokenizer,model_args):
-    if "llama" in model_args.model_name_or_path.lower() and tokenizer.bos_token_id != DEFAULT_BOS_TOKEN:
-        tokenizer.add_special_tokens({
-            "eos_token": DEFAULT_EOS_TOKEN,
-            "bos_token": DEFAULT_BOS_TOKEN,
-            "unk_token": DEFAULT_UNK_TOKEN,
-        })
-        if tokenizer.pad_token_id is None or tokenizer.pad_token_id == -1:
-            tokenizer.pad_token_id = tokenizer.eos_token_id
 
-    if tokenizer.pad_token is None:
-        tokenizer.add_special_tokens({
-            "pad_token": tokenizer.eos_token,
-        })
-
-def preprocess_config(config: PretrainedConfig):
-    if config.decoder_start_token_id is None:
-        config.decoder_start_token_id = config.bos_token_id
-    assert config.decoder_start_token_id == config.bos_token_id
 
 
 if __name__ == '__main__':
