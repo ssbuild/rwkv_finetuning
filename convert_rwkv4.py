@@ -17,11 +17,18 @@ if __name__ == '__main__':
     # size = '430M'
     # ctx_len = 1024
 
+    # repo_id = None
+    # checkpoint_file = "/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-raven-3b-v12/RWKV-4-Raven-3B-v12-Eng49%-Chn49%-Jpn1%-Other1%-20230527-ctx4096.pth"
+    # output_dir = '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-raven-3b-v12'
+    # size = '3B'
+    # ctx_len = 4096
+
     repo_id = None
-    checkpoint_file = "/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-raven-3b-v12/RWKV-4-Raven-3B-v12-Eng49%-Chn49%-Jpn1%-Other1%-20230527-ctx4096.pth"
-    output_dir = '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-raven-3b-v12'
-    size = '3B'
+    checkpoint_file = "/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-raven-1b5-v12/RWKV-4-Raven-1B5-v12-Eng98%-Other2%-20230520-ctx4096.pth"
+    output_dir = '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-raven-1b5-v12/'
+    size = '1b5'
     ctx_len = 4096
+
 
     size = size.upper()
     convert_rmkv_checkpoint_to_hf_format(repo_id,checkpoint_file=checkpoint_file,

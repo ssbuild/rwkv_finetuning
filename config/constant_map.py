@@ -48,10 +48,15 @@ train_info_models = {
     "rwkv-4-raven-3b-v12-Eng49%-Chn49%-Jpn1%-Other1%": {
         'model_type': 'rwkv',
         'model_name_or_path': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-raven-3b-v12',
-        'config_name': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-raven-3b-v12',
+        'config_name': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-raven-3b-v12/config.json',
         'tokenizer_name': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-raven-3b-v12',
+    },
+    "RWKV-4-Raven-1B5-v12-Eng98%-Other2%": {
+        'model_type': 'rwkv',
+        'model_name_or_path': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-raven-1b5-v12',
+        'config_name': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-raven-1b5-v12/config.json',
+        'tokenizer_name': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-raven-1b5-v12',
     }
-
 }
 
 
