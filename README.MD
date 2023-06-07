@@ -2,6 +2,7 @@
    - [deep_training](https://github.com/ssbuild/deep_training)
 
 ```text
+    06-07 deep_training 0.1.10.post0 fix setup for rwkv4
     06-06 Initialize the rwkv finetuning 
 ```
 
