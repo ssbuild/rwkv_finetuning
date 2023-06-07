@@ -31,17 +31,22 @@ if __name__ == '__main__':
     else:
         RWKV_FLOAT_MODE = '32'
 
-    # 加载cuda_core
-    set_model_profile(RWKV_T_MAX=1024,RWKV_FLOAT_MODE=RWKV_FLOAT_MODE)
+
 
     dataHelper = NN_DataHelper(model_args, training_args, data_args)
     config_kwargs = {"torch_dtype": torch.float16}
     if global_args['config_merge']:
         config_kwargs.update(global_args['config_merge'])
 
+    config: RwkvConfig
     tokenizer, config, _, _ = dataHelper.load_tokenizer_and_config(config_kwargs=config_kwargs,config_class_name=RwkvConfig)
     dataHelper.preprocess_tokenizer_config()
     config.save_pretrained(output_weight_dir)
+
+    # 加载cuda_core
+    set_model_profile(RWKV_T_MAX=config.ctx_len, RWKV_FLOAT_MODE=RWKV_FLOAT_MODE)
+    # 训练数据最大长度限制
+    assert data_args.train_max_seq_length <= config.ctx_len
 
     # 缓存数据集
     if data_args.do_train:
