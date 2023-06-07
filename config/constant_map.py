@@ -24,7 +24,7 @@ train_info_models = {
         'tokenizer_name': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-pileplus-430m',
     },
 
-# rwkv-4-pileplus
+
     'rwkv-4-pile-3b': {
         'model_type': 'rwkv',
         'model_name_or_path': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-pile-3b',

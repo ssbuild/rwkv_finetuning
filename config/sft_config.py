@@ -8,7 +8,7 @@ from transformers import BitsAndBytesConfig
 from config.constant_map import train_info_models
 
 #切换模型
-train_model_config = train_info_models['RWKV-4-Raven-1B5-v12-Eng98%-Other2%']
+train_model_config = train_info_models['rwkv-4-raven-3b-v12-Eng49%-Chn49%-Jpn1%-Other1%']
 
 
 global_args = {
