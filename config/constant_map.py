@@ -44,6 +44,14 @@ train_info_models = {
         'tokenizer_name': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-pile-14b',
     },
 
+    # 中英日语
+    "rwkv-4-raven-3b-v12-Eng49%-Chn49%-Jpn1%-Other1%": {
+        'model_type': 'rwkv',
+        'model_name_or_path': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-raven-3b-v12',
+        'config_name': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-raven-3b-v12',
+        'tokenizer_name': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-raven-3b-v12',
+    }
+
 }
 
 
