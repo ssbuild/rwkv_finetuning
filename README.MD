@@ -19,7 +19,7 @@ pip install -q -U git+https://github.com/huggingface/transformers.git
 ## weigtht select one is suitable for you !
 
 - [rwkv](https://huggingface.co/BlinkDL) 
-- 使用 convert_rwkv4.py 转换权重，配置及tokenizer
+- 使用 tools/convert_rwkv4.py 转换权重，配置及tokenizer
 
 
 
@@ -40,7 +40,7 @@ pip install -q -U git+https://github.com/huggingface/transformers.git
  }
 ```
 
-   多轮会话
+多轮会话
 ```json
  {
      "id": 0, "paragraph": [

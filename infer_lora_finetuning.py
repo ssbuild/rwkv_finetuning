@@ -3,17 +3,11 @@
 # @FileName: infer_lora_finetuning
 import os
 
-import torch
 from deep_training.data_helper import ModelArguments, DataArguments
-from transformers import HfArgumentParser,PreTrainedTokenizer
+from transformers import HfArgumentParser
 
-from data_utils import train_info_args, NN_DataHelper,global_args
-from models import MyTransformer, Generate,LoraArguments,PromptArguments,RwkvConfig
-
-
-
-
-
+from data_utils import train_info_args, NN_DataHelper
+from models import MyTransformer, Generate, LoraArguments, RwkvConfig
 
 if __name__ == '__main__':
     train_info_args['seed'] = None
