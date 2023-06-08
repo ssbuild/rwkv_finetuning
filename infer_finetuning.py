@@ -1,6 +1,7 @@
 # @Time    : 2023/4/2 22:49
 # @Author  : tk
 # @FileName: infer
+import torch
 from deep_training.data_helper import ModelArguments, DataArguments
 from transformers import HfArgumentParser
 
@@ -19,7 +20,7 @@ if __name__ == '__main__':
     dataHelper.preprocess_tokenizer_config()
 
     config = RwkvConfig.from_pretrained('./best_ckpt')
-    pl_model = MyTransformer(config=config, model_args=model_args)
+    pl_model = MyTransformer(config=config, model_args=model_args,torch_dtype=torch.float16)
 
     # deepspeed 权重使用转换脚本命令
     # 一般根据时间排序选最新的权重文件夹
@@ -49,6 +50,7 @@ if __name__ == '__main__':
     for input in text_list:
         response, history = Generate.chat(model, query=input, tokenizer=tokenizer, max_length=512,
                                           eos_token_id=config.eos_token_id,
+                                          pad_token_id=tokenizer.eos_token_id,
                                           do_sample=False, top_p=0.7, temperature=0.95, )
         print('input',input)
         print('output',response)

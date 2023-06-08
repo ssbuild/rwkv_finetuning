@@ -232,8 +232,9 @@ class RWKV_RNN(MyModule):
 
             if preprocess_only:
                 return state
-
+            print('*' * 30,x.size())
             x = self.LN(x, w.ln_out)
+            print('*' * 30,'head', w.head.weight.size())
             x = w.head.weight @ x
 
             return x.float(), state

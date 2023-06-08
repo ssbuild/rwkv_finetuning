@@ -2,7 +2,8 @@
    - [deep_training](https://github.com/ssbuild/deep_training)
 
 ```text
-    06-07 deep_training 0.1.10.post0 fix setup for rwkv4
+    06-08 deep_training 0.1.10.post1  fix推理bug, 增加chat.py 最低版本要求0.1.10.post1
+    06-07 deep_training 0.1.10.post0 fix setup for rwkv4  
     06-06 Initialize the rwkv finetuning 
 ```
 
@@ -64,6 +65,13 @@ pip install -q -U git+https://github.com/huggingface/transformers.git
     # infer_lora_finetuning.py 推理微调模型
     # infer_ptuning.py 推理p-tuning-v2微调模型
      python infer_finetuning.py
+
+![chat.py](tools/1.png)
+
+
+![infer.py](tools/2.png)
+
+
 
 
 

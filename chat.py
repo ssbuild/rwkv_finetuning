@@ -2,20 +2,38 @@
 # @Author  : ssbuild
 # @Time    : 2023/6/8 13:03
 
-
-
-
 print('Loading...')
 
 import numpy as np
 import os, copy, types, gc, sys
-import torch
-
 
 # torch.backends.cudnn.benchmark = True
 # torch.backends.cudnn.allow_tf32 = True
 # torch.backends.cuda.matmul.allow_tf32 = True
 # np.set_printoptions(precision=4, suppress=True, linewidth=200)
+
+# Load Model
+
+import torch
+from deep_training.data_helper import ModelArguments, DataArguments
+from transformers import HfArgumentParser
+from data_utils import train_info_args, NN_DataHelper
+from models import MyTransformer, RwkvConfig,set_model_profile
+
+parser = HfArgumentParser((ModelArguments, DataArguments))
+model_args, data_args = parser.parse_dict(train_info_args, allow_extra_keys=True)
+
+dataHelper = NN_DataHelper(model_args, None, data_args)
+tokenizer, config, _,_= dataHelper.load_tokenizer_and_config(config_kwargs={"torch_dtype": torch.float16},config_class_name=RwkvConfig)
+dataHelper.preprocess_tokenizer_config()
+
+set_model_profile(RWKV_T_MAX=config.ctx_len, RWKV_FLOAT_MODE='16')
+
+pl_model = MyTransformer(config=config, model_args=model_args,torch_dtype=torch.float16)
+model = pl_model.get_llm_model()
+
+model.requires_grad_(False)
+model.eval().half().cuda()
 
 CHAT_LANG = 'Chinese'
 
@@ -93,30 +111,10 @@ A: 西瓜是一种常见的水果，是一种多年生蔓生藤本植物。西�
 现在可以输入内容和机器人聊天（注意它不怎么懂中文，它可能更懂英文）。请经常使用 +reset 重置机器人记忆。
 '''
 
-# Load Model
-
-import torch
-from deep_training.data_helper import ModelArguments, DataArguments
-from transformers import HfArgumentParser
-
-from data_utils import train_info_args, NN_DataHelper
-from models import MyTransformer, Generate, RwkvConfig,set_model_profile
-
-parser = HfArgumentParser((ModelArguments, DataArguments))
-model_args, data_args = parser.parse_dict(train_info_args, allow_extra_keys=True)
-
-dataHelper = NN_DataHelper(model_args, None, data_args)
-tokenizer, config, _,_= dataHelper.load_tokenizer_and_config(config_kwargs={"torch_dtype": torch.float16},config_class_name=RwkvConfig)
-dataHelper.preprocess_tokenizer_config()
-
-set_model_profile(RWKV_T_MAX=config.ctx_len, RWKV_FLOAT_MODE='16')
-
-pl_model = MyTransformer(config=config, model_args=model_args)
-model = pl_model.get_llm_model()
 
 
-model.requires_grad_(False)
-model.eval().cuda()
+
+
 
 model_tokens = []
 
@@ -164,13 +162,13 @@ def run_rnn(tokens, newline_adj=0):
     global model,model_tokens, current_state
     for i in range(len(tokens)):
         model_tokens += [int(tokens[i])]
-        input_ids = torch.tensor([model_tokens],dtype=torch.int64,device=model.device)
+        input_ids = torch.tensor([model_tokens[-1:]],dtype=torch.int64,device=model.device)
         if current_state is not None:
             current_state = [_.to(model.device) for _ in current_state]
 
         if i == len(tokens) - 1:
             o = model.forward(input_ids, state=current_state, return_dict=True)
-            out = o.logits.cpu()[0]
+            out = o.logits.cpu()[0][0].float()
         else:
             o = model.forward(input_ids, state=current_state, return_dict=True,return_state_only=True)
         current_state = [_.detach().cpu() for _ in o.state]

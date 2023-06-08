@@ -3,6 +3,7 @@
 # @FileName: infer_lora_finetuning
 import os
 
+import torch
 from deep_training.data_helper import ModelArguments, DataArguments
 from transformers import HfArgumentParser
 
@@ -27,7 +28,7 @@ if __name__ == '__main__':
 
     assert lora_args.inference_mode == True
 
-    pl_model = MyTransformer(config=config, model_args=model_args, lora_args=lora_args,
+    pl_model = MyTransformer(config=config, model_args=model_args, lora_args=lora_args,torch_dtype=torch.float16
                              # load_in_8bit=global_args["load_in_8bit"],
                              # # device_map="auto",
                              # device_map = {"":0} # 第一块卡
@@ -53,6 +54,7 @@ if __name__ == '__main__':
         for input in text_list:
             response, history = Generate.chat(model, query=input, tokenizer=tokenizer, max_length=512,
                                               eos_token_id=config.eos_token_id,
+                                              pad_token_id=tokenizer.eos_token_id,
                                               do_sample=False, top_p=0.7, temperature=0.95, )
             print('input', input)
             print('output', response)

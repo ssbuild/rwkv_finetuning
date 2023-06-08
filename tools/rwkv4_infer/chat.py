@@ -150,7 +150,8 @@ def run_rnn(tokens, newline_adj = 0):
             out, current_state = model.forward(model_tokens, current_state)
         else:
             current_state = model.forward(model_tokens, current_state, preprocess_only = True)
-    
+
+
     # print(f'### model ###\n[{tokenizer.tokenizer.decode(model_tokens)}]')
 
     out[0] = -999999999  # disable <|endoftext|>
