@@ -66,9 +66,12 @@ pip install -q -U git+https://github.com/huggingface/transformers.git
     # infer_ptuning.py 推理p-tuning-v2微调模型
      python infer_finetuning.py
 
+
+python chat.py
 ![chat.py](tools/1.png)
 
 
+python infer.py
 ![infer.py](tools/2.png)
 
 
