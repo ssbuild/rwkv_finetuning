@@ -168,7 +168,7 @@ def run_rnn(tokens, newline_adj=0):
 
         if i == len(tokens) - 1:
             o = model.forward(input_ids, state=current_state, return_dict=True)
-            out = o.logits.cpu()[0][0].float()
+            out = o.logits.cpu().squeeze(0).squeeze(0).float()
         else:
             o = model.forward(input_ids, state=current_state, return_dict=True,return_state_only=True)
         current_state = [_.detach().cpu() for _ in o.state]
