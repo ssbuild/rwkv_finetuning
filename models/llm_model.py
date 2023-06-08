@@ -2,7 +2,8 @@
 # @Time    : 2023/5/12 20:41
 # @Author  : tk
 # @FileName: llm_model
-from deep_training.nlp.models.rwkv4.modeling_rwkv import TransformerRWKV4LMHeadModel,RwkvConfig,set_model_profile
+from deep_training.nlp.models.rwkv4.modeling_rwkv import TransformerRWKV4LMHeadModel, RwkvConfig, set_model_profile, \
+    RwkvForCausalLM
 from deep_training.trainer.pl.modelweighter import *
 
 
@@ -87,7 +88,7 @@ class MyTransformer(TransformerRWKV4ForLM, ModelWeightMinMax, with_pl=True):
         return super(MyTransformer, self).get_model_lr(model, lr)
 
 
-    def get_llm_model(self) -> PreTrainedModel:
+    def get_llm_model(self) -> RwkvForCausalLM:
         if self.lora_args is not None and self.lora_args.with_lora:
             return self.backbone.model.model
         elif self.prompt_args is not None and self.prompt_args.with_prompt:
