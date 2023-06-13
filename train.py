@@ -41,7 +41,7 @@ if __name__ == '__main__':
     config: RwkvConfig
     tokenizer, config, _, _ = dataHelper.load_tokenizer_and_config(config_kwargs=config_kwargs,config_class_name=RwkvConfig)
     dataHelper.preprocess_tokenizer_config()
-    config.save_pretrained(output_weight_dir)
+
 
     # 加载cuda_core
     set_model_profile(RWKV_T_MAX=config.ctx_len, RWKV_FLOAT_MODE=RWKV_FLOAT_MODE)
@@ -95,7 +95,10 @@ if __name__ == '__main__':
                              quantization_config=global_args["quantization_config"],
                              load_in_8bit=global_args["load_in_8bit"],
                              device_map={"": trainer.local_rank} if trainer.world_size > 1 else "auto",
-                             torch_dtype=torch.float16,)
+                             torch_dtype=torch.float16,
+                             new_num_tokens=len(tokenizer),  # 可能扩充词
+                             )
+    config.save_pretrained(output_weight_dir)
 
     # 加载sft权重
     # pl_model.load_sft_weight('./best_ckpt/best.pt',is_trainable=True)

@@ -2,6 +2,7 @@
    - [deep_training](https://github.com/ssbuild/deep_training)
 
 ```text
+    06-13 support resize_token_embeddings
     06-08 deep_training 0.1.10.post1  fix推理bug, 增加chat.py 最低版本要求0.1.10.post1
     06-07 deep_training 0.1.10.post0 fix setup for rwkv4  
     06-06 Initialize the rwkv finetuning 
@@ -9,12 +10,6 @@
 
 ## install
   - pip install -i https://pypi.org/simple -U -r requirements.txt
-
-```text
-dev 
-pip install -U -i https://pypi.org/simple deep_training==0.1.10
-pip install -q -U git+https://github.com/huggingface/transformers.git
-```
 
 
 ## weigtht select one is suitable for you !
