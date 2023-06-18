@@ -27,6 +27,7 @@ dataHelper = NN_DataHelper(model_args, None, data_args)
 tokenizer, config, _,_= dataHelper.load_tokenizer_and_config(config_kwargs={"torch_dtype": torch.float16},config_class_name=RwkvConfig)
 dataHelper.preprocess_tokenizer_config()
 
+# 可以自行修改 RWKV_T_MAX  推理最大长度
 set_model_profile(RWKV_T_MAX=config.ctx_len, RWKV_FLOAT_MODE='16')
 
 pl_model = MyTransformer(config=config, model_args=model_args,torch_dtype=torch.float16)
