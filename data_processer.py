@@ -41,7 +41,7 @@ class TokenUnSupervision:
         input_ids_all = []
         for idx, (question, answer) in enumerate(examples):
             text = question + answer
-            ids = tokenizer.encode(text=text)
+            ids = tokenizer.encode(text=text)  + [tokenizer.eos_token_id]
             if len(ids) <= 3:
                 continue
             input_ids_all += ids
@@ -68,7 +68,7 @@ class TokenSupervision:
         ds = []
         for idx, (question, answer) in enumerate(examples):
             a_ids = tokenizer.encode(text=question,add_special_tokens=False)[:max_seq_length-3]
-            b_ids = tokenizer.encode(text=answer)
+            b_ids = tokenizer.encode(text=answer) + [tokenizer.eos_token_id]
             assert len(b_ids)
             input_ids_all = a_ids + b_ids
             labels_all = [-100] * len(a_ids) + b_ids
@@ -94,7 +94,7 @@ class TokenSupervisionRounds:
 
             prompt_text += "[Round {}]\n问：{}\n答：{}".format(idx, question, answer)
             a_ids = tokenizer.encode(text=a_text,add_special_tokens=False)[:max_seq_length-3]
-            b_ids = tokenizer.encode(text=answer)
+            b_ids = tokenizer.encode(text=answer)  + [tokenizer.eos_token_id]
 
 
             assert len(b_ids)
