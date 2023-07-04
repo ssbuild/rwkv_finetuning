@@ -18,7 +18,7 @@ import torch
 from deep_training.data_helper import ModelArguments, DataArguments
 from transformers import HfArgumentParser
 from data_utils import train_info_args, NN_DataHelper
-from models import MyTransformer, RwkvConfig,set_model_profile
+from aigc_zoo.model_zoo.rwkv4.llm_model import MyTransformer, RwkvConfig,set_model_profile
 
 parser = HfArgumentParser((ModelArguments, DataArguments))
 model_args, data_args = parser.parse_dict(train_info_args, allow_extra_keys=True)

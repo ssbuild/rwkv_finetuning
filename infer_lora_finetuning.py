@@ -8,7 +8,7 @@ from deep_training.data_helper import ModelArguments, DataArguments
 from transformers import HfArgumentParser
 
 from data_utils import train_info_args, NN_DataHelper
-from models import MyTransformer, Generate, LoraArguments, RwkvConfig,set_model_profile
+from aigc_zoo.model_zoo.rwkv4.llm_model import MyTransformer, Generate, LoraArguments, RwkvConfig,set_model_profile
 
 if __name__ == '__main__':
     train_info_args['seed'] = None
