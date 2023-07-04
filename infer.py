@@ -6,12 +6,15 @@ from deep_training.data_helper import ModelArguments, DataArguments
 from transformers import HfArgumentParser
 
 from data_utils import train_info_args, NN_DataHelper
-from models import MyTransformer, Generate, RwkvConfig
+from models import MyTransformer, Generate, RwkvConfig,set_model_profile
 
 
 if __name__ == '__main__':
     parser = HfArgumentParser((ModelArguments, DataArguments))
     model_args, data_args = parser.parse_dict(train_info_args, allow_extra_keys=True)
+
+    # 可以自行修改 RWKV_T_MAX  推理最大长度
+    set_model_profile(RWKV_T_MAX=2048, RWKV_FLOAT_MODE='')
 
     dataHelper = NN_DataHelper(model_args, None, data_args)
     tokenizer, config, _,_= dataHelper.load_tokenizer_and_config(config_kwargs={"torch_dtype": torch.float16},config_class_name=RwkvConfig)
