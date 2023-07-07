@@ -6,7 +6,8 @@ from deep_training.data_helper import ModelArguments, DataArguments
 from transformers import HfArgumentParser
 
 from data_utils import train_info_args, NN_DataHelper, get_deepspeed_config
-from aigc_zoo.model_zoo.rwkv4.llm_model import MyTransformer, Generate, RwkvConfig,set_model_profile
+from aigc_zoo.model_zoo.rwkv4.llm_model import MyTransformer, RwkvConfig,set_model_profile
+from aigc_zoo.utils.llm_generate import Generate
 
 deep_config = get_deepspeed_config()
 
