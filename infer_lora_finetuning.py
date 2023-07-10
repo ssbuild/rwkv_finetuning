@@ -20,7 +20,7 @@ if __name__ == '__main__':
 
     dataHelper = NN_DataHelper(model_args, None, data_args)
     tokenizer, _, _, _ = dataHelper.load_tokenizer_and_config(config_class_name=RwkvConfig)
-    dataHelper.preprocess_tokenizer_config()
+    
 
     # 一般根据时间排序选最新的权重文件夹
     ckpt_dir = './best_ckpt/last'

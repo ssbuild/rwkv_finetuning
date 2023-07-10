@@ -31,7 +31,6 @@ data_conf = {
 }
 
 
-
 def preprocess(text):
   return text
 
@@ -47,7 +46,12 @@ class NN_DataHelper(DataHelper):
         assert data_conf[DataStrategy.sup]['stride'] > 0
         assert data_conf[DataStrategy.unsup]['stride'] > 0
 
-    def preprocess_tokenizer_config(self):
+    def load_tokenizer_and_config(*args,**kwargs):
+        ret = super().load_tokenizer_and_config(*args,**kwargs)
+        self._preprocess_tokenizer_config()
+        return ret
+
+    def _preprocess_tokenizer_config(self):
         # model_args = self.model_args
         tokenizer = self.tokenizer
         config = self.config
@@ -181,14 +185,10 @@ if __name__ == '__main__':
 
     dataHelper = NN_DataHelper(model_args, training_args, data_args)
     tokenizer, config, _, _ = dataHelper.load_tokenizer_and_config(config_kwargs={"torch_dtype": torch.float16},config_class_name=RwkvConfig)
-    dataHelper.preprocess_tokenizer_config()
-
-
 
     # 缓存数据集
     # 检测是否存在 output/dataset_0-train.record ，不存在则制作数据集
     dataHelper.make_dataset_all()
-
 
     # def shuffle_records(record_filenames, outfile, compression_type='GZIP'):
     #     print('shuffle_records record...')

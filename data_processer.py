@@ -7,8 +7,6 @@ from enum import Enum
 import numpy as np
 from transformers import PreTrainedTokenizer
 
-
-
 class DataStrategy(Enum):
     sup = 1
     unsup = 2

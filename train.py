@@ -40,7 +40,6 @@ if __name__ == '__main__':
 
     config: RwkvConfig
     tokenizer, config, _, _ = dataHelper.load_tokenizer_and_config(config_kwargs=config_kwargs,config_class_name=RwkvConfig)
-    dataHelper.preprocess_tokenizer_config()
 
 
     # 加载cuda_core
