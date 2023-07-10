@@ -46,7 +46,7 @@ class NN_DataHelper(DataHelper):
         assert data_conf[DataStrategy.sup]['stride'] > 0
         assert data_conf[DataStrategy.unsup]['stride'] > 0
 
-    def load_tokenizer_and_config(*args,**kwargs):
+    def load_tokenizer_and_config(self,*args,**kwargs):
         ret = super().load_tokenizer_and_config(*args,**kwargs)
         self._preprocess_tokenizer_config()
         return ret
