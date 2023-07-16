@@ -8,7 +8,7 @@ from transformers import BitsAndBytesConfig
 from config.constant_map import train_info_models,train_target_modules_maps
 
 #切换模型
-train_model_config = train_info_models['rwkv-4-raven-3b-v12-Eng49%-Chn49%-Jpn1%-Other1%']
+train_model_config = train_info_models['rwkv-4-World-CHNtuned-3B-v1']
 
 
 global_args = {
@@ -34,7 +34,7 @@ global_args = {
 lora_info_args = {
     'with_lora': True,  # 是否启用lora模块
     'lora_type': 'lora',
-    'r': 8,
+    'r': 32,
     'target_modules': train_target_modules_maps[train_model_config['model_type']],
     'lora_alpha': 32,
     'lora_dropout': 0.1,
@@ -48,7 +48,7 @@ lora_info_args = {
 adalora_info_args = {
     'with_lora': False,  # 是否启用adalora模块
     'lora_type': 'adalora',
-    'r': 8,
+    'r': 32,
     'target_modules': train_target_modules_maps[train_model_config['model_type']],
     'lora_alpha': 32,
     'lora_dropout': 0.1,

@@ -39,7 +39,7 @@ if __name__ == '__main__':
         config_kwargs.update(global_args['config_merge'])
 
     config: RwkvConfig
-    tokenizer, config, _, _ = dataHelper.load_tokenizer_and_config(config_kwargs=config_kwargs,config_class_name=RwkvConfig)
+    tokenizer, config, _, _ = dataHelper.load_tokenizer_and_config(config_kwargs=config_kwargs)
 
 
     # 加载cuda_core

@@ -2,6 +2,7 @@
    - [deep_training](https://github.com/ssbuild/deep_training)
 
 ```text
+    07-16 support rwkv-4-world model training
     06-13 support resize_token_embeddings
     06-08 deep_training 0.1.10.post1  fix推理bug, 增加chat.py 最低版本要求0.1.10.post1
     06-07 deep_training 0.1.10.post0 fix setup for rwkv4  

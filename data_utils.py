@@ -1,7 +1,6 @@
 # @Time    : 2023/1/22 16:22
 # @Author  : tk
 # @FileName: data_utils.py
-
 import copy
 import json
 import os
@@ -15,6 +14,7 @@ from transformers import PreTrainedTokenizer, HfArgumentParser, PretrainedConfig
 from data_processer import DataStrategy, TokenSupervision, TokenUnSupervision,TokenSupervisionRounds
 from config import *
 from aigc_zoo.model_zoo.rwkv4.llm_model import RwkvConfig,set_model_profile,LoraArguments,LoraConfig,PromptArguments
+from aigc_zoo.model_zoo.rwkv4.rwkv4_tokenizer import RWKVTokenizer
 
 data_conf = {
     'strategy': DataStrategy.sup,  # 数据策略选项
@@ -27,7 +27,6 @@ data_conf = {
     DataStrategy.sub_rounds: {
         'stride': int(train_info_args['max_seq_length'] / 3 * 2),
     }
-
 }
 
 
@@ -47,6 +46,18 @@ class NN_DataHelper(DataHelper):
         assert data_conf[DataStrategy.unsup]['stride'] > 0
 
     def load_tokenizer_and_config(self,*args,**kwargs):
+        if 'config_class_name' not in kwargs:
+            kwargs['config_class_name'] = RwkvConfig
+        if 'tokenizer_class_name' not in kwargs:
+            if os.path.basename(self.model_args.model_name_or_path).lower().find('world') != -1:
+                kwargs['tokenizer_class_name'] = RWKVTokenizer
+                tokenizer_kwargs = kwargs.get('tokenizer_kwargs',{})
+                kwargs['tokenizer_kwargs'] = tokenizer_kwargs
+                tokenizer_kwargs['bos_token_id'] = 0
+                tokenizer_kwargs['eos_token_id'] = 0
+                tokenizer_kwargs['pad_token_id'] = 1
+                tokenizer_kwargs['sep_token_id'] = None
+
         ret = super().load_tokenizer_and_config(*args,**kwargs)
         self._preprocess_tokenizer_config()
         return ret
@@ -55,13 +66,10 @@ class NN_DataHelper(DataHelper):
         # model_args = self.model_args
         tokenizer = self.tokenizer
         config = self.config
-        if tokenizer.pad_token is None:
-            tokenizer.add_special_tokens({
-                "pad_token": tokenizer.eos_token,
-            })
         if config.decoder_start_token_id is None:
             config.decoder_start_token_id = config.bos_token_id
         assert config.decoder_start_token_id == config.bos_token_id
+
 
     def on_data_ready(self):
         self.index = -1
@@ -95,21 +103,7 @@ class NN_DataHelper(DataHelper):
             print(ds[0])
         return ds
 
-    # {
-    #     "id": 0, "paragraph": [
-    #     # 一轮会话
-    #     {
-    #         "q": "从南京到上海的路线",
-    #         "a": [
-    #             "你好，南京到上海的路线如下：",
-    #             "1. 南京到上海，可以乘坐南京地铁1号线，在南京站乘坐轨道交通1号线。",
-    #             "2. 南京到浦东机场，可以搭乘上海地铁1号，在陆家嘴站乘坐地铁1线，在浦东国际机场站乘坐机场快线，前往上海浦东国际机场。",
-    #             "3. 上海到南京，可以换乘上海地铁2号线，从南京站换乘地铁2线，再从南京南站换乘地铁1路，然后到达上海站"
-    #         ]
-    #     }
-    #     # 二轮....
-    # ]
-    # }
+
     # 读取文件
     def on_get_corpus(self, files: typing.List, mode: str):
         D = []
@@ -184,7 +178,7 @@ if __name__ == '__main__':
 
 
     dataHelper = NN_DataHelper(model_args, training_args, data_args)
-    tokenizer, config, _, _ = dataHelper.load_tokenizer_and_config(config_kwargs={"torch_dtype": torch.float16},config_class_name=RwkvConfig)
+    tokenizer, config, _, _ = dataHelper.load_tokenizer_and_config(config_kwargs={"torch_dtype": torch.float16})
 
     # 缓存数据集
     # 检测是否存在 output/dataset_0-train.record ，不存在则制作数据集

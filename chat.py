@@ -15,16 +15,16 @@ import os, copy, types, gc, sys
 # Load Model
 
 import torch
-from deep_training.data_helper import ModelArguments, DataArguments
+from deep_training.data_helper import ModelArguments
 from transformers import HfArgumentParser
 from data_utils import train_info_args, NN_DataHelper
 from aigc_zoo.model_zoo.rwkv4.llm_model import MyTransformer, RwkvConfig,set_model_profile
 
-parser = HfArgumentParser((ModelArguments, DataArguments))
-model_args, data_args = parser.parse_dict(train_info_args, allow_extra_keys=True)
+parser = HfArgumentParser((ModelArguments, ))
+(model_args,)  = parser.parse_dict(train_info_args, allow_extra_keys=True)
 
-dataHelper = NN_DataHelper(model_args, None, data_args)
-tokenizer, config, _,_= dataHelper.load_tokenizer_and_config(config_kwargs={"torch_dtype": torch.float16},config_class_name=RwkvConfig)
+dataHelper = NN_DataHelper(model_args)
+tokenizer, config, _,_= dataHelper.load_tokenizer_and_config(config_kwargs={"torch_dtype": torch.float16})
 
 
 # 可以自行修改 RWKV_T_MAX  推理最大长度
