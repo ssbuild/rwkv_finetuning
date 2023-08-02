@@ -51,12 +51,25 @@ train_info_models = {
         'config_name': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-raven-3b-v12/config.json',
         'tokenizer_name': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-raven-3b-v12',
     },
-    "RWKV-4-Raven-1B5-v12-Eng98%-Other2%": {
+    "rwkv-4-Raven-1B5-v12-Eng98%-Other2%": {
         'model_type': 'rwkv',
         'model_name_or_path': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-raven-1b5-v12',
         'config_name': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-raven-1b5-v12/config.json',
         'tokenizer_name': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-raven-1b5-v12',
+    },
+
+    # world 系列
+    "rwkv-4-World-CHNtuned-3B-v1": {
+        'model_type': 'rwkv',
+        'model_name_or_path': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-World-CHNtuned-3B-v1',
+        'config_name': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-World-CHNtuned-3B-v1/config.json',
+        'tokenizer_name': '/data/nlp/pre_models/torch/rwkv_gf/rwkv-4-World-CHNtuned-3B-v1',
     }
+
+
+
+
+
 }
 
 

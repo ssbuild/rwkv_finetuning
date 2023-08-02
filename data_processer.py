@@ -21,7 +21,7 @@ class TokenIdsFinal:
         attention_mask = np.asarray([1] * len(input_ids), dtype=np.int32)
         labels = np.asarray(labels, dtype=np.int32)
         if pad_len:
-            pad_val = tokenizer.pad_token_id
+            pad_val = tokenizer.eos_token_id
             input_ids = np.pad(input_ids, (0, pad_len), 'constant', constant_values=(pad_val, pad_val))
             attention_mask = np.pad(attention_mask, (0, pad_len), 'constant', constant_values=(0, 0))
             labels = np.pad(labels, (0, pad_len), 'constant', constant_values=(-100, -100))
@@ -39,7 +39,7 @@ class TokenUnSupervision:
         input_ids_all = []
         for idx, (question, answer) in enumerate(examples):
             text = question + answer
-            ids = tokenizer.encode(text=text)  + [tokenizer.eos_token_id]
+            ids = tokenizer.encode(text=text) + [tokenizer.eos_token_id]
             if len(ids) <= 3:
                 continue
             input_ids_all += ids
