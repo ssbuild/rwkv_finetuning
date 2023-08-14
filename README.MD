@@ -25,7 +25,7 @@
 
 ## data sample
 
-[中文第三方数据集](https://huggingface.co/datasets/YeungNLP/firefly-train-1.1M)
+[open_data](https://github.com/ssbuild/open_data)
 
 
 数据示例
