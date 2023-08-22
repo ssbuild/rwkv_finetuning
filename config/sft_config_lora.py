@@ -5,22 +5,16 @@ import json
 import os
 import torch
 from transformers import BitsAndBytesConfig
-from config.constant_map import train_info_models,train_target_modules_maps
-
-#切换模型
-train_model_config = train_info_models['rwkv-4-World-CHNtuned-3B-v1']
+from config.constant_map import train_model_config,train_target_modules_maps
 
 
 global_args = {
-    "load_in_8bit": False, 
-    "load_in_4bit": False,
-
-    #load_in_4bit 量化配置
     "quantization_config": BitsAndBytesConfig(
-        load_in_4bit = True,
+        load_in_8bit=False,
+        load_in_4bit=False,
         llm_int8_threshold=6.0,
         llm_int8_has_fp16_weight=False,
-        bnb_4bit_compute_dtype=torch.float16,
+        bnb_4bit_compute_dtype=torch.float16 if not torch.cuda.is_bf16_supported() else torch.bfloat16,
         bnb_4bit_use_double_quant=True,
         bnb_4bit_quant_type="nf4",
     ),

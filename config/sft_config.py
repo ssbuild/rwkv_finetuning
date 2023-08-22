@@ -5,15 +5,13 @@ import json
 import os
 import torch
 from transformers import BitsAndBytesConfig
-from config.constant_map import train_info_models
+from config.constant_map import train_model_config
 
-#切换模型
-train_model_config = train_info_models['rwkv-4-World-CHNtuned-3B-v1']
+
 
 
 global_args = {
-    "load_in_8bit": False, 
-    "load_in_4bit": False,
+
     #load_in_4bit 量化配置
     "quantization_config": None,
     "config_merge": {

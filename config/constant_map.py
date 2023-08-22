@@ -91,3 +91,7 @@ train_target_modules_maps = {
     'cpmant' : ['project_q','project_v'],
     'rwkv' : ['key','value','receptance'],
 }
+
+
+#切换模型
+train_model_config = train_info_models['rwkv-4-World-CHNtuned-3B-v1']
