@@ -8,8 +8,8 @@ from deep_training.data_helper import ModelArguments, DataArguments
 from transformers import HfArgumentParser
 
 from data_utils import train_info_args, NN_DataHelper
-from aigc_zoo.model_zoo.rwkv4.llm_model import MyTransformer, EffiArguments, \
-    RwkvConfig,set_model_profile,LoraModel
+from aigc_zoo.model_zoo.rwkv4.llm_model import MyTransformer, PetlArguments, \
+    RwkvConfig,set_model_profile,PetlModel
 from aigc_zoo.utils.llm_generate import Generate
 
 if __name__ == '__main__':
@@ -28,7 +28,7 @@ if __name__ == '__main__':
     ckpt_dir = './best_ckpt/last'
 
     config = RwkvConfig.from_pretrained(ckpt_dir)
-    lora_args = EffiArguments.from_pretrained(ckpt_dir)
+    lora_args = PetlArguments.from_pretrained(ckpt_dir)
 
     assert lora_args.inference_mode == True
 
@@ -49,8 +49,8 @@ if __name__ == '__main__':
     pl_model.eval().half().cuda()
 
 
-    # backbone model replaced LoraModel
-    lora_model: LoraModel = pl_model.backbone
+    # backbone model replaced PetlModel
+    lora_model: PetlModel = pl_model.backbone
 
     text_list = ["写一个诗歌，关于冬天",
                  "晚上睡不着应该怎么办",

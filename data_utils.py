@@ -13,7 +13,7 @@ from fastdatasets.record import load_dataset as Loader, RECORD, WriterObject, gf
 from transformers import PreTrainedTokenizer, HfArgumentParser, PretrainedConfig
 from data_processer import DataStrategy, TokenSupervision, TokenUnSupervision,TokenSupervisionRounds
 from config import *
-from aigc_zoo.model_zoo.rwkv4.llm_model import RwkvConfig,set_model_profile,EffiArguments,LoraConfig,PromptArguments
+from aigc_zoo.model_zoo.rwkv4.llm_model import RwkvConfig,set_model_profile,PetlArguments,LoraConfig,PromptArguments
 from aigc_zoo.model_zoo.rwkv4.rwkv4_tokenizer import RWKVTokenizer
 
 data_conf = {
@@ -217,7 +217,7 @@ class NN_DataHelper(DataHelper):
 
 
 if __name__ == '__main__':
-    parser = HfArgumentParser((ModelArguments, TrainingArguments, DataArguments, EffiArguments,PromptArguments))
+    parser = HfArgumentParser((ModelArguments, TrainingArguments, DataArguments, PetlArguments,PromptArguments))
     model_args, training_args, data_args, _,_ = parser.parse_dict(train_info_args)
 
 
