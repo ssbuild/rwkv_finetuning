@@ -11,24 +11,24 @@ import torch
 from deep_training.data_helper import DataHelper, ModelArguments, TrainingArguments, DataArguments
 from fastdatasets.record import load_dataset as Loader, RECORD, WriterObject, gfile
 from transformers import PreTrainedTokenizer, HfArgumentParser, PretrainedConfig
-from data_processer import DataStrategy, TokenSupervision, TokenUnSupervision,TokenSupervisionRounds
+from data_processer import DataStrategy, TokenTunction,TokenSlidding, build_template # noqa
 from config import *
 from aigc_zoo.model_zoo.rwkv4.llm_model import RwkvConfig,set_model_profile,PetlArguments,LoraConfig,PromptArguments
 from aigc_zoo.model_zoo.rwkv4.rwkv4_tokenizer import RWKVTokenizer
 
 data_conf = {
-    'strategy': DataStrategy.sup,  # 数据策略选项
-    DataStrategy.sup: {
-        'stride':  int(train_info_args['max_seq_length'] / 3 * 2),
+    'strategy': DataStrategy.tunction,  # 数据策略选项
+    DataStrategy.tunction: {
+        'ensure_answer_min_length': 1,
+        'sup': True, # 是否监督模式
     },
-    DataStrategy.unsup: {
-        'stride':  int(train_info_args['max_seq_length'] / 3 * 2),
-    },
-    DataStrategy.sub_rounds: {
-        'stride': int(train_info_args['max_seq_length'] / 3 * 2),
-    }
-}
 
+    DataStrategy.slidding: {
+        'stride': int(train_info_args['max_seq_length'] / 3 * 2),
+        'sup': True, # 是否监督模式
+    }
+
+}
 
 def preprocess(text):
   return text
@@ -42,8 +42,7 @@ class NN_DataHelper(DataHelper):
 
     def __init__(self, *args, **kwargs):
         super(NN_DataHelper, self).__init__(*args, **kwargs)
-        assert data_conf[DataStrategy.sup]['stride'] > 0
-        assert data_conf[DataStrategy.unsup]['stride'] > 0
+        assert data_conf[DataStrategy.slidding]['stride'] > 0
 
     def load_tokenizer_and_config(self,*args,**kwargs):
         if 'config_class_name' not in kwargs:
@@ -85,15 +84,14 @@ class NN_DataHelper(DataHelper):
 
         examples = data
 
-
         strategy = data_conf['strategy']
-        if strategy == DataStrategy.sup:
-            ds = TokenSupervision.process(tokenizer, config=config,  max_seq_length=max_seq_length, examples=examples,**data_conf[strategy])
-        elif strategy == DataStrategy.unsup:
-            ds = TokenUnSupervision.process(tokenizer, config=config,  max_seq_length=max_seq_length, examples=examples, **data_conf[strategy])
-        elif strategy == DataStrategy.sub_rounds:
-            ds = TokenSupervisionRounds.process(tokenizer, config=config, max_seq_length=max_seq_length, examples=examples,
-                                            **data_conf[strategy])
+        if strategy == DataStrategy.tunction:
+            ds = TokenTunction.process(tokenizer, config=config, max_seq_length=max_seq_length, examples=examples,
+                                       **data_conf[strategy])
+        elif strategy == DataStrategy.slidding:
+            ds = TokenSlidding.process(tokenizer, config=config, max_seq_length=max_seq_length, examples=examples,
+                                       **data_conf[strategy])
+
         else:
             raise ValueError('Invalid strategy', strategy)
         if not ds:

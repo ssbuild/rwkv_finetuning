@@ -5,6 +5,7 @@ import torch
 from deep_training.data_helper import ModelArguments
 from transformers import HfArgumentParser
 
+from data_processer import build_template
 from data_utils import train_info_args, NN_DataHelper
 from aigc_zoo.model_zoo.rwkv4.llm_model import MyTransformer, RwkvConfig,set_model_profile
 from aigc_zoo.utils.rwkv4_generate import Generate
@@ -32,6 +33,7 @@ if __name__ == '__main__':
                  "你会干什么?",
                  ]
     for input in text_list:
+        #query = build_template(input)
         response = Generate.generate(model, query=input, tokenizer=tokenizer, max_length=512,
                                           eos_token_id=config.eos_token_id,
                                           pad_token_id=config.eos_token_id,
