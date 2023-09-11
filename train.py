@@ -90,14 +90,17 @@ if __name__ == '__main__':
         precision=precision,# 可以自行尝试  "32": "32-true", "16": "16-mixed", "bf16": "bf16-mixed"
     )
 
-
-
-    pl_model = MyTransformer(config=config, model_args=model_args, training_args=training_args, lora_args=lora_args, prompt_args=prompt_args,
+    transformer_args = dict(config=config, model_args=model_args, training_args=training_args, lora_args=lora_args, prompt_args=prompt_args,
                              quantization_config=global_args["quantization_config"],
                              device_map={"": trainer.local_rank} if trainer.world_size > 1 else "auto",
                              torch_dtype=torch.float16,
                              new_num_tokens=len(tokenizer),  # 可能扩充词
                              )
+
+    if transformer_args["quantization_config"] is None:
+        transformer_args.pop("device_map")
+
+    pl_model = MyTransformer(**transformer_args)
     config.save_pretrained(output_weight_dir)
 
     # 加载sft权重
