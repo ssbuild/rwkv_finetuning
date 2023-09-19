@@ -58,7 +58,7 @@ if __name__ == '__main__':
     dataHelper.make_dataset_all()
 
 
-    deepspeed_config = get_deepspeed_config()
+    deepspeed_config = get_deepspeed_config(precision)
     strategy = 'ddp' if torch.cuda.device_count() > 1 else 'auto'
     if deepspeed_config is not None and len(deepspeed_config):
         strategy = DeepSpeedStrategy(config=deepspeed_config, )
