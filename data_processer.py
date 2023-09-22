@@ -79,6 +79,7 @@ class TokenIdsMaker:
             labels = copy.deepcopy(input_ids) if not sup else [ -100 ] * len(a_ids) + copy.deepcopy(b_ids)
             input_ids = sptoken + input_ids
             labels = sptoken + labels if not sup else [ -100 ] * len(sptoken) + labels
+            assert len(input_ids) <= max_seq_length
             ds.append(cls.final(tokenizer, input_ids, labels, max_seq_length))
         return ds
 
@@ -114,7 +115,7 @@ class TokenIdsMaker:
                 input_ids = input_ids_qa[pos:pos + max_seq_length - len(sptoken)]
                 labels = labels_all[pos:pos + max_seq_length - len(sptoken)]
 
-                pos += pos + sliding_size
+                pos +=  sliding_size
                 if np.all(np.asarray(labels) == -100):
                     continue
 
