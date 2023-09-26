@@ -11,7 +11,7 @@ from transformers import HfArgumentParser
 from data_utils import NN_DataHelper, train_info_args, get_deepspeed_config, global_args
 from aigc_zoo.model_zoo.rwkv4.llm_model import MyTransformer, PetlArguments, LoraConfig, PromptArguments,RwkvConfig,set_model_profile
 
-
+assert global_args["trainer_backend"] == "pl"
 
 if __name__ == '__main__':
     parser = HfArgumentParser((ModelArguments, TrainingArguments, DataArguments, PetlArguments,PromptArguments))
@@ -21,23 +21,9 @@ if __name__ == '__main__':
 
     output_weight_dir = './best_ckpt'
 
-    is_bf16_supported = torch.cuda.is_bf16_supported()
-    # 精度 根据实际情况做调整
-    if is_bf16_supported:
-        precision = 'bf16'
-    else:
-        precision = '16'
-
-    if global_args["quantization_config"] is not None and global_args["quantization_config"].load_in_8bit:
-        precision = "32"
 
 
-    if precision.startswith('16'):
-        RWKV_FLOAT_MODE = '16'
-    elif precision.startswith('bf16'):
-        RWKV_FLOAT_MODE = 'bf16'
-    else:
-        RWKV_FLOAT_MODE = '32'
+
 
 
 
@@ -49,9 +35,25 @@ if __name__ == '__main__':
     config: RwkvConfig
     tokenizer, config, _, _ = dataHelper.load_tokenizer_and_config(config_kwargs=config_kwargs)
 
+    is_bf16_supported = torch.cuda.is_bf16_supported()
+    # 精度 根据实际情况做调整
+    if is_bf16_supported:
+        precision = 'bf16'
+    else:
+        precision = '16'
 
-    # 加载cuda_core
+    if global_args[ "quantization_config" ] is not None and global_args[ "quantization_config" ].load_in_8bit:
+        precision = "32"
+
+    if precision.startswith('16'):
+        RWKV_FLOAT_MODE = '16'
+    elif precision.startswith('bf16'):
+        RWKV_FLOAT_MODE = 'bf16'
+    else:
+        RWKV_FLOAT_MODE = '32'
+        # 加载cuda_core
     set_model_profile(RWKV_T_MAX=config.ctx_len, RWKV_FLOAT_MODE=RWKV_FLOAT_MODE)
+
     # 训练数据最大长度限制
     assert data_args.train_max_seq_length <= config.ctx_len
 
