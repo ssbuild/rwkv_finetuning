@@ -63,6 +63,9 @@ def patch_args(train_info_args):
         if global_args["load_in_bit"] == 0:
             global_args["quantization_config"] = None
 
+    if hasattr(train_info_args,"gradient_checkpointing"):
+        train_info_args.gradient_checkpointing = False
+
     if global_args["enable_lora"]:
         #检查lora adalora是否开启
         assert train_info_args.get('lora',{}).get('with_lora',False) + \
@@ -70,6 +73,9 @@ def patch_args(train_info_args):
             train_info_args.get('ia3',{}).get('with_lora',False) == 1 , ValueError('lora adalora ia3 can set one at same time !')
 
         train_info_args.pop('prompt', None)
+
+
+
     elif global_args["enable_ptv2"]:
         train_info_args.pop('lora', None)
         train_info_args.pop('adalora', None)
