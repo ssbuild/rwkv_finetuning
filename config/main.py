@@ -63,8 +63,9 @@ def patch_args(train_info_args):
         if global_args["load_in_bit"] == 0:
             global_args["quantization_config"] = None
 
-    if hasattr(train_info_args,"gradient_checkpointing"):
-        train_info_args.gradient_checkpointing = False
+
+    if "gradient_checkpointing" in train_info_args:
+        train_info_args["gradient_checkpointing"] = False
 
     if global_args["enable_lora"]:
         #检查lora adalora是否开启
@@ -80,8 +81,8 @@ def patch_args(train_info_args):
         train_info_args.pop('lora', None)
         train_info_args.pop('adalora', None)
         train_info_args.pop('ia3', None)
-        if hasattr(train_info_args,"gradient_checkpointing"):
-            train_info_args.gradient_checkpointing = False
+        if "gradient_checkpointing" in train_info_args:
+            train_info_args[ "gradient_checkpointing" ] = False
     else:
         train_info_args.pop('lora',None)
         train_info_args.pop('adalora', None)
