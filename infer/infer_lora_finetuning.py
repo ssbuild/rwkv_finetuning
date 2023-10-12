@@ -26,7 +26,7 @@ if __name__ == '__main__':
     tokenizer, _, _, _ = dataHelper.load_tokenizer_and_config()
 
     # 一般根据时间排序选最新的权重文件夹
-    ckpt_dir = './best_ckpt/last'
+    ckpt_dir = '../scripts/best_ckpt/last'
 
     config = RwkvConfig.from_pretrained(ckpt_dir)
     lora_args = PetlArguments.from_pretrained(ckpt_dir)
