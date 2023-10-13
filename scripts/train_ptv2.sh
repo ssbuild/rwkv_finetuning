@@ -7,10 +7,9 @@ train_config="./config/train_${trainer_backend}.yaml"
 # 强制覆盖配置文件
 export train_config=${train_config}
 export enable_deepspeed=false
-export enable_ptv2=false
+export enable_ptv2=true
 export enable_lora=false
 export load_in_bit=0
-
 
 
 
@@ -30,6 +29,7 @@ done
 if [ "${mode}" != "dataset" ]  && [ "${mode}" != "train" ] ; then
     usage
 fi
+
 
 if [[ "${mode}" == "dataset" ]] ; then
     python ../data_utils.py
